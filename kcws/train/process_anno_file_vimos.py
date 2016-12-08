@@ -6,8 +6,9 @@ import os
 import re
 import codecs
 
-pat1 = re.compile(ur"( ?\[.+?\].+? +|.+? +)")
-pat2 = re.compile(ur"\[(?P<first_name>.+?)\]")
+# pat1 = re.compile(ur"( ?\[.+?\].+? +|.+? +)")
+pat1 = re.compile(ur'((?: ?\[.+?\])?.+? +)')
+pat2 = re.compile(ur"\[(?P<words>.+?)\]")
 
 
 def process_item(line):
@@ -25,9 +26,9 @@ def process_line(line):
     s = []
     for item in process_item(line):
         try:
-            token, _ = item.rsplit("/", 1)
-            s.extend(list(token))
-            if token == u'。':
+            words, _ = item.rsplit("/", 1)
+            s.extend(list(words))
+            if words == u'。':
                 sentence = u' '.join(s)
                 yield sentence
                 s = []
